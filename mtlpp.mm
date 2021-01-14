@@ -2486,7 +2486,7 @@ namespace ns
     }
 
     Error::Error() :
-        Object(Handle{ (__bridge void*)[[NSError alloc] init] })
+        Object(Handle{ (__bridge void*) nil })
     {
 
     }

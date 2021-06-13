@@ -7,9 +7,9 @@ namespace mtlpp
 {
     class Layer : public ns::Object
     {
-        public:
-            Layer() {};
-            Layer(const ns::Handle& handle) : ns::Object(handle) {}
-            virtual ~Layer();
+    public:
+        Layer() {};
+        Layer(const ns::Handle& handle) : ns::Object(handle) {}
+        virtual ~Layer();
     };
 }

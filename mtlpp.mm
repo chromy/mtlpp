@@ -2316,6 +2316,24 @@ namespace mtlpp
 }
 
 //////////////////////////////////////
+// FILE: metal_drawable.mm
+//////////////////////////////////////
+// #include "metal_drawable.hpp"
+
+#import <Metal/Metal.h>
+#import <QuartzCore/CAMetalLayer.h>
+
+namespace mtlpp
+{
+    Texture MetalDrawable::GetTexture()
+    {
+        ns::Handle handle;
+        handle.ptr = ((__bridge id<CAMetalDrawable>)m_ptr).texture;
+        return handle;
+    }
+}
+
+//////////////////////////////////////
 // FILE: metal_layer.mm
 //////////////////////////////////////
 // #include "metal_layer.hpp"
@@ -2331,9 +2349,9 @@ namespace mtlpp
 {
     MetalLayer::MetalLayer() :
 #if MTLPP_IS_AVAILABLE(10_11, 8_0)
-        ns::Object(ns::Handle{ (__bridge void*)[[CAMetalLayer alloc] init] })
+        Layer(ns::Handle{ (__bridge void*)[[CAMetalLayer alloc] init] })
 #else
-        ns::Object(ns::Handle{ nullptr })
+        Layer(ns::Handle{ nullptr })
 #endif
     {
     }
@@ -2353,6 +2371,13 @@ namespace mtlpp
         {
             ((__bridge CAMetalLayer*)m_ptr).opaque = NO;
         }
+    }
+
+    MetalDrawable MetalLayer::NextDrawable() const
+    {
+        ns::Handle handle;
+        handle.ptr = [((__bridge CAMetalLayer*)m_ptr) nextDrawable];
+        return handle;
     }
 }
 

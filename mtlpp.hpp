@@ -2702,13 +2702,13 @@ namespace mtlpp
 
     class Window
     {
-        public:
-            Window(const ns::Handle& handle) : m_ptr(handle.ptr) {}
+    public:
+        Window(const ns::Handle& handle) : m_ptr(handle.ptr) {}
 
-            void SetLayer(const Layer& layer);
-            void SetWantsLayer(bool yes);
-        private:
-            const void* m_ptr;
+        void SetLayer(const Layer& layer);
+        void SetWantsLayer(bool yes);
+    private:
+        const void* m_ptr;
     };
 }
 
@@ -2724,10 +2724,34 @@ namespace mtlpp
 {
     class Layer : public ns::Object
     {
-        public:
-            Layer() {};
-            Layer(const ns::Handle& handle) : ns::Object(handle) {}
-            virtual ~Layer();
+    public:
+        Layer() {};
+        Layer(const ns::Handle& handle) : ns::Object(handle) {}
+        virtual ~Layer();
+    };
+}
+
+//////////////////////////////////////
+// FILE: metal_drawable.hpp
+//////////////////////////////////////
+// #pragma once
+
+// #include "defines.hpp"
+// #include "ns.hpp"
+// #include "drawable.hpp"
+// #include "texture.hpp"
+
+namespace mtlpp
+{
+    class MetalDrawable : public Drawable
+    {
+    public:
+        MetalDrawable() {}
+        MetalDrawable(const ns::Handle& handle) : Drawable(handle) {}
+
+        Texture GetTexture();
+
+    private:
     };
 }
 
@@ -2739,6 +2763,7 @@ namespace mtlpp
 // #include "defines.hpp"
 // #include "ns.hpp"
 // #include "layer.hpp"
+// #include "metal_drawable.hpp"
 
 namespace mtlpp
 {
@@ -2752,7 +2777,36 @@ namespace mtlpp
 
         void SetDevice(const Device& device);
         void SetOpaque(bool yes);
+        MetalDrawable NextDrawable() const;
     private:
+    };
+}
+
+//////////////////////////////////////
+// FILE: clear_color.hpp
+//////////////////////////////////////
+// #pragma once
+
+// #include "defines.hpp"
+// #include "ns.hpp"
+
+namespace mtlpp
+{
+    class ClearColor
+    {
+        double red;
+        double green;
+        double blue;
+        double alpha;
+
+        explicit ClearColor(double red, double green, double blue, double alpha)
+         : red(red), green(green), blue(blue), alpha(alpha)
+        {
+        }
+
+        explicit ClearColor() : ClearColor(0, 0, 0, 0)
+        {
+        }
     };
 }
 
@@ -2788,4 +2842,6 @@ namespace mtlpp
 // #include "heap.hpp"
 // #include "window.hpp"
 // #include "metal_layer.hpp"
+// #include "metal_drawable.hpp"
+// #include "clear_color.hpp"
 

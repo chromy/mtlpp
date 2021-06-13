@@ -25,3 +25,5 @@
 #include "sampler.hpp"
 #include "texture.hpp"
 #include "heap.hpp"
+#include "window.hpp"
+#include "metal_layer.hpp"

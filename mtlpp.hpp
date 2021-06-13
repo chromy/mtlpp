@@ -2727,7 +2727,7 @@ namespace mtlpp
     public:
         Layer() {};
         Layer(const ns::Handle& handle) : ns::Object(handle) {}
-        virtual ~Layer() = default
+        virtual ~Layer() = default;
     };
 }
 

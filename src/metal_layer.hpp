@@ -3,6 +3,7 @@
 #include "defines.hpp"
 #include "ns.hpp"
 #include "layer.hpp"
+#include "metal_drawable.hpp"
 
 namespace mtlpp
 {
@@ -16,6 +17,7 @@ namespace mtlpp
 
         void SetDevice(const Device& device);
         void SetOpaque(bool yes);
+        MetalDrawable NextDrawable() const;
     private:
     };
 }

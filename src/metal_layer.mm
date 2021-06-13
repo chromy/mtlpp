@@ -34,4 +34,11 @@ namespace mtlpp
             ((__bridge CAMetalLayer*)m_ptr).opaque = NO;
         }
     }
+
+    MetalDrawable MetalLayer::NextDrawable() const
+    {
+        ns::Handle handle;
+        handle.ptr = [((__bridge CAMetalLayer*)m_ptr) nextDrawable];
+        return handle;
+    }
 }

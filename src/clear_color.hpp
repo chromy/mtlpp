@@ -5,7 +5,7 @@
 
 namespace mtlpp
 {
-    class ClearColor
+    struct ClearColor
     {
         double red;
         double green;

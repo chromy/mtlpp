@@ -2316,6 +2316,47 @@ namespace mtlpp
 }
 
 //////////////////////////////////////
+// FILE: metal_layer.mm
+//////////////////////////////////////
+// #include "metal_layer.hpp"
+// #include "device.hpp"
+
+#import <Metal/MTLDevice.h>
+
+#if MTLPP_IS_AVAILABLE(10_11, 8_0)
+#import <QuartzCore/CAMetalLayer.h>
+#endif
+
+namespace mtlpp
+{
+    MetalLayer::MetalLayer() :
+#if MTLPP_IS_AVAILABLE(10_11, 8_0)
+        ns::Object(ns::Handle{ (__bridge void*)[[CAMetalLayer alloc] init] })
+#else
+        ns::Object(ns::Handle{ nullptr })
+#endif
+    {
+    }
+
+    void MetalLayer::SetDevice(const Device &device)
+    {
+        ((__bridge CAMetalLayer*)m_ptr).device = (__bridge id<MTLDevice>)device.GetPtr();
+    }
+
+    void MetalLayer::SetOpaque(bool yes)
+    {
+        if(yes)
+        {
+            ((__bridge CAMetalLayer*)m_ptr).opaque = YES;
+        }
+        else
+        {
+            ((__bridge CAMetalLayer*)m_ptr).opaque = NO;
+        }
+    }
+}
+
+//////////////////////////////////////
 // FILE: ns.mm
 //////////////////////////////////////
 /*
@@ -4762,6 +4803,34 @@ namespace mtlpp
     {
         Validate();
         [(__bridge MTLVertexDescriptor*)m_ptr reset];
+    }
+}
+
+//////////////////////////////////////
+// FILE: window.mm
+//////////////////////////////////////
+// #include "window.hpp"
+// #include "layer.hpp"
+
+#import <AppKit/NSWindow.h>
+
+namespace mtlpp
+{
+    void Window::SetLayer(const Layer& layer)
+    {
+        ((__bridge NSWindow*)m_ptr).contentView.layer = ((__bridge CALayer*)layer.GetPtr());
+    }
+
+    void Window::SetWantsLayer(bool yes)
+    {
+        if(yes)
+        {
+            ((__bridge NSWindow*)m_ptr).contentView.wantsLayer = YES;
+        }
+        else
+        {
+            ((__bridge NSWindow*)m_ptr).contentView.wantsLayer = NO;
+        }
     }
 }
 

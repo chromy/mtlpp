@@ -2689,6 +2689,74 @@ namespace mtlpp
 }
 
 //////////////////////////////////////
+// FILE: window.hpp
+//////////////////////////////////////
+// #pragma once
+
+// #include "defines.hpp"
+// #include "ns.hpp"
+
+namespace mtlpp
+{
+    class Layer;
+
+    class Window
+    {
+        public:
+            Window(const ns::Handle& handle) : m_ptr(handle.ptr) {}
+
+            void SetLayer(const Layer& layer);
+            void SetWantsLayer(bool yes);
+        private:
+            const void* m_ptr;
+    };
+}
+
+//////////////////////////////////////
+// FILE: layer.hpp
+//////////////////////////////////////
+// #pragma once
+
+// #include "defines.hpp"
+// #include "ns.hpp"
+
+namespace mtlpp
+{
+    class Layer : public ns::Object
+    {
+        public:
+            Layer() {};
+            Layer(const ns::Handle& handle) : ns::Object(handle) {}
+            virtual ~Layer();
+    };
+}
+
+//////////////////////////////////////
+// FILE: metal_layer.hpp
+//////////////////////////////////////
+// #pragma once
+
+// #include "defines.hpp"
+// #include "ns.hpp"
+// #include "layer.hpp"
+
+namespace mtlpp
+{
+    class Device;
+
+    class MetalLayer : public Layer
+    {
+    public:
+        MetalLayer();
+        MetalLayer(const ns::Handle& handle) : Layer(handle) {}
+
+        void SetDevice(const Device& device);
+        void SetOpaque(bool yes);
+    private:
+    };
+}
+
+//////////////////////////////////////
 // FILE: mtlpp.hpp
 //////////////////////////////////////
 /*
@@ -2718,4 +2786,6 @@ namespace mtlpp
 // #include "sampler.hpp"
 // #include "texture.hpp"
 // #include "heap.hpp"
+// #include "window.hpp"
+// #include "metal_layer.hpp"
 

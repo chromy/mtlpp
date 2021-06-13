@@ -2727,7 +2727,7 @@ namespace mtlpp
     public:
         Layer() {};
         Layer(const ns::Handle& handle) : ns::Object(handle) {}
-        virtual ~Layer();
+        virtual ~Layer() = default
     };
 }
 
@@ -2783,10 +2783,6 @@ namespace mtlpp
 }
 
 //////////////////////////////////////
-// FILE: clear_color.hpp
-//////////////////////////////////////
-
-//////////////////////////////////////
 // FILE: mtlpp.hpp
 //////////////////////////////////////
 /*
@@ -2819,5 +2815,4 @@ namespace mtlpp
 // #include "window.hpp"
 // #include "metal_layer.hpp"
 // #include "metal_drawable.hpp"
-// #include "clear_color.hpp"
 

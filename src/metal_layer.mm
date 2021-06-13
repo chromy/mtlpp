@@ -11,9 +11,9 @@ namespace mtlpp
 {
     MetalLayer::MetalLayer() :
 #if MTLPP_IS_AVAILABLE(10_11, 8_0)
-        ns::Object(ns::Handle{ (__bridge void*)[[CAMetalLayer alloc] init] })
+        Layer(ns::Handle{ (__bridge void*)[[CAMetalLayer alloc] init] })
 #else
-        ns::Object(ns::Handle{ nullptr })
+        Layer(ns::Handle{ nullptr })
 #endif
     {
     }

@@ -10,6 +10,6 @@ namespace mtlpp
     public:
         Layer() {};
         Layer(const ns::Handle& handle) : ns::Object(handle) {}
-        virtual ~Layer();
+        virtual ~Layer() = default
     };
 }

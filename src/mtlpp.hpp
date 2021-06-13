@@ -28,4 +28,3 @@
 #include "window.hpp"
 #include "metal_layer.hpp"
 #include "metal_drawable.hpp"
-#include "clear_color.hpp"

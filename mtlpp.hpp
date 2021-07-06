@@ -1027,7 +1027,7 @@ namespace mtlpp
         LanguageVersion                        GetLanguageVersion() const MTLPP_AVAILABLE(10_11, 9_0);
 
         void SetFastMathEnabled(bool fastMathEnabled);
-        void SetFastMathEnabled(LanguageVersion languageVersion);
+        void SetLanguageVersion(LanguageVersion languageVersion);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 

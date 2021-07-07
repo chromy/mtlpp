@@ -2776,6 +2776,7 @@ namespace mtlpp
         MetalLayer(const ns::Handle& handle) : Layer(handle) {}
 
         void SetDevice(const Device& device);
+        void SetDrawableSize(float width, float height);
         void SetOpaque(bool yes);
         MetalDrawable NextDrawable() const;
     private:

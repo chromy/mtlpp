@@ -35,6 +35,11 @@ namespace mtlpp
         }
     }
 
+    void MetalLayer::SetDrawableSize(float width, float height)
+    {
+        ((__bridge CAMetalLayer*)m_ptr).drawableSize = CGSizeMake(width, height);
+    }
+
     MetalDrawable MetalLayer::NextDrawable() const
     {
         ns::Handle handle;

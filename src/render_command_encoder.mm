@@ -442,6 +442,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr updateFence:(__bridge id<MTLFence>)fence.GetPtr() afterStages:MTLRenderStages(afterStages)];
+#else
+        ignore(fence);
+        ignore(afterStages);
 #endif
     }
 
@@ -450,6 +453,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr waitForFence:(__bridge id<MTLFence>)fence.GetPtr() beforeStages:MTLRenderStages(beforeStages)];
+#else
+        ignore(fence);
+        ignore(beforeStages);
 #endif
     }
 
@@ -458,6 +464,10 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr setTessellationFactorBuffer:(__bridge id<MTLBuffer>)buffer.GetPtr() offset:offset instanceStride:instanceStride];
+#else
+        ignore(buffer);
+        ignore(offset);
+        ignore(instanceStride);
 #endif
     }
 

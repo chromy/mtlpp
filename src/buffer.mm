@@ -26,6 +26,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_MAC(10_11)
         [(__bridge id<MTLBuffer>)m_ptr didModifyRange:NSMakeRange(range.Location, range.Length)];
+#else
+        ignore(range);
 #endif
     }
 
@@ -36,6 +38,9 @@ namespace mtlpp
         MTLTextureDescriptor* mtlTextureDescriptor = (__bridge MTLTextureDescriptor*)descriptor.GetPtr();
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLBuffer>)m_ptr newTextureWithDescriptor:mtlTextureDescriptor offset:offset bytesPerRow:bytesPerRow] };
 #else
+        ignore(descriptor);
+        ignore(offset);
+        ignore(bytesPerRow);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -44,6 +49,9 @@ namespace mtlpp
     {
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge id<MTLBuffer>)m_ptr addDebugMarker:(__bridge NSString*)marker.GetPtr() range:NSMakeRange(range.Location, range.Length)];
+#else
+      ignore(marker);
+      ignore(range);
 #endif
     }
 

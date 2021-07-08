@@ -145,6 +145,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_3)
         [(__bridge id<MTLCommandBuffer>)m_ptr presentDrawable:(__bridge id<MTLDrawable>)drawable.GetPtr() afterMinimumDuration:duration];
+#else
+        ignore(drawable);
+        ignore(duration);
 #endif
     }
 

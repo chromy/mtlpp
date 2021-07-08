@@ -160,6 +160,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLComputeCommandEncoder>)m_ptr updateFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+        ignore(fence);
 #endif
     }
 
@@ -167,6 +169,8 @@ namespace mtlpp
     {
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLComputeCommandEncoder>)m_ptr waitForFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+        ignore(fence);
 #endif
     }
 }

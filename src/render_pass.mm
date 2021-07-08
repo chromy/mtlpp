@@ -185,6 +185,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(9_0)
         [(__bridge MTLRenderPassDepthAttachmentDescriptor*)m_ptr setDepthResolveFilter:MTLMultisampleDepthResolveFilter(depthResolveFilter)];
+#else
+        ignore(depthResolveFilter);
 #endif
     }
 

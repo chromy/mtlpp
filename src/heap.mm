@@ -48,6 +48,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setSize:size];
+#else
+        ignore(size);
 #endif
 
     }
@@ -57,8 +59,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setStorageMode:MTLStorageMode(storageMode)];
+#else
+        ignore(storageMode);
 #endif
-
     }
 
     void HeapDescriptor::SetCpuCacheMode(CpuCacheMode cpuCacheMode) const
@@ -66,6 +69,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setCpuCacheMode:MTLCPUCacheMode(cpuCacheMode)];
+#else
+        ignore(cpuCacheMode);
 #endif
 
     }
@@ -141,6 +146,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLHeap>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+#else
+        ignore(label);
 #endif
 
     }
@@ -151,6 +158,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return uint32_t([(__bridge id<MTLHeap>)m_ptr maxAvailableSizeWithAlignment:alignment]);
 #else
+        ignore(alignment);
         return 0;
 #endif
 
@@ -162,6 +170,8 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLHeap>)m_ptr newBufferWithLength:length options:MTLResourceOptions(options)] };
 #else
+        ignore(length);
+        ignore(options);
         return ns::Handle{ nullptr };
 #endif
 
@@ -173,6 +183,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLHeap>)m_ptr newTextureWithDescriptor:(__bridge MTLTextureDescriptor*)desc.GetPtr()] };
 #else
+        ignore(desc);
         return ns::Handle{ nullptr };
 #endif
 
@@ -184,6 +195,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return PurgeableState([(__bridge id<MTLHeap>)m_ptr setPurgeableState:MTLPurgeableState(state)]);
 #else
+        ignore(state);
         return PurgeableState(0);
 #endif
 

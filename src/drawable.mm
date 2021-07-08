@@ -45,6 +45,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_3)
         [(__bridge id<MTLDrawable>)m_ptr presentAfterMinimumDuration:duration];
+#else
+        ignore(duration);
 #endif
     }
 
@@ -56,6 +58,8 @@ namespace mtlpp
             Drawable drawable(ns::Handle{ (__bridge void*)mtlDrawable });
             handler(drawable);
         }];
+#else
+        ignore(handler);
 #endif
     }
 

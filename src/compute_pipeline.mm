@@ -69,6 +69,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge MTLComputePipelineDescriptor*)m_ptr setStageInputDescriptor:(__bridge MTLStageInputOutputDescriptor*)stageInputDescriptor.GetPtr()];
+#else
+        ignore(stageInputDescriptor);
 #endif
     }
 

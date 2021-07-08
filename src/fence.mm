@@ -35,6 +35,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLFence>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+#else
+        ignore(label);
 #endif
     }
 }

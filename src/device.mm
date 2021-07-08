@@ -109,6 +109,7 @@ namespace mtlpp
         MTLSizeAndAlign mtlSizeAndAlign = [(__bridge id<MTLDevice>)m_ptr heapTextureSizeAndAlignWithDescriptor:(__bridge MTLTextureDescriptor*)desc.GetPtr()];
         return SizeAndAlign{ uint32_t(mtlSizeAndAlign.size), uint32_t(mtlSizeAndAlign.align) };
 #else
+        ignore(desc);
         return SizeAndAlign{0, 0};
 #endif
     }
@@ -119,6 +120,8 @@ namespace mtlpp
         MTLSizeAndAlign mtlSizeAndAlign = [(__bridge id<MTLDevice>)m_ptr heapBufferSizeAndAlignWithLength:length options:MTLResourceOptions(options)];
         return SizeAndAlign{ uint32_t(mtlSizeAndAlign.size), uint32_t(mtlSizeAndAlign.align) };
 #else
+        ignore(length);
+        ignore(options);
         return SizeAndAlign{0, 0};
 #endif
     }
@@ -128,6 +131,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLDevice>)m_ptr newHeapWithDescriptor:(__bridge MTLHeapDescriptor*)descriptor.GetPtr()] };
 #else
+        ignore(descriptor);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -310,7 +314,7 @@ namespace mtlpp
     ComputePipelineState Device::NewComputePipelineState(const Function& computeFunction, ns::Error* error)
     {
         Validate();
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
@@ -387,6 +391,10 @@ namespace mtlpp
 
         return ns::Handle{ (__bridge void*)state };
 #else
+        ignore(descriptor);
+        ignore(options);
+        ignore(outReflection);
+        ignore(error);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -404,6 +412,10 @@ namespace mtlpp
                                                                             ns::Handle{ (__bridge void*)reflection },
                                                                             ns::Handle{ (__bridge void*)error });
                                                                     }];
+#else
+        ignore(descriptor);
+        ignore(options);
+        ignore(completionHandler);
 #endif
     }
 
@@ -429,6 +441,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
         return [(__bridge id<MTLDevice>)m_ptr supportsTextureSampleCount:sampleCount];
 #else
+        ignore(sampleCount);
         return true;
 #endif
     }

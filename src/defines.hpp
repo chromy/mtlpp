@@ -71,3 +71,8 @@
 #define MTLPP_IS_AVAILABLE_IOS(ios)  (0 __DARWIN_ALIAS_STARTING_IPHONE___IPHONE_##ios( || 1 ))
 #define MTLPP_IS_AVAILABLE(mac, ios) (MTLPP_IS_AVAILABLE_MAC(mac) || MTLPP_IS_AVAILABLE_IOS(ios))
 
+namespace mtlpp {
+template <typename... T>
+inline void ignore(const T&...) {}
+} // namespace mtlpp
+

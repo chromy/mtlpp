@@ -341,6 +341,8 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLBlitCommandEncoder>)m_ptr
             updateFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+      ignore(fence);
 #endif
     }
 
@@ -349,6 +351,8 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLBlitCommandEncoder>)m_ptr
             waitForFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+      ignore(fence);
 #endif
     }
 }
@@ -384,6 +388,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_MAC(10_11)
         [(__bridge id<MTLBuffer>)m_ptr didModifyRange:NSMakeRange(range.Location, range.Length)];
+#else
+        ignore(range);
 #endif
     }
 
@@ -394,6 +400,9 @@ namespace mtlpp
         MTLTextureDescriptor* mtlTextureDescriptor = (__bridge MTLTextureDescriptor*)descriptor.GetPtr();
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLBuffer>)m_ptr newTextureWithDescriptor:mtlTextureDescriptor offset:offset bytesPerRow:bytesPerRow] };
 #else
+        ignore(descriptor);
+        ignore(offset);
+        ignore(bytesPerRow);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -402,6 +411,9 @@ namespace mtlpp
     {
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge id<MTLBuffer>)m_ptr addDebugMarker:(__bridge NSString*)marker.GetPtr() range:NSMakeRange(range.Location, range.Length)];
+#else
+      ignore(marker);
+      ignore(range);
 #endif
     }
 
@@ -563,6 +575,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_3)
         [(__bridge id<MTLCommandBuffer>)m_ptr presentDrawable:(__bridge id<MTLDrawable>)drawable.GetPtr() afterMinimumDuration:duration];
+#else
+        ignore(drawable);
+        ignore(duration);
 #endif
     }
 
@@ -879,6 +894,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLComputeCommandEncoder>)m_ptr updateFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+        ignore(fence);
 #endif
     }
 
@@ -886,6 +903,8 @@ namespace mtlpp
     {
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLComputeCommandEncoder>)m_ptr waitForFence:(__bridge id<MTLFence>)fence.GetPtr()];
+#else
+        ignore(fence);
 #endif
     }
 }
@@ -964,6 +983,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge MTLComputePipelineDescriptor*)m_ptr setStageInputDescriptor:(__bridge MTLStageInputOutputDescriptor*)stageInputDescriptor.GetPtr()];
+#else
+        ignore(stageInputDescriptor);
 #endif
     }
 
@@ -1268,6 +1289,7 @@ namespace mtlpp
         MTLSizeAndAlign mtlSizeAndAlign = [(__bridge id<MTLDevice>)m_ptr heapTextureSizeAndAlignWithDescriptor:(__bridge MTLTextureDescriptor*)desc.GetPtr()];
         return SizeAndAlign{ uint32_t(mtlSizeAndAlign.size), uint32_t(mtlSizeAndAlign.align) };
 #else
+        ignore(desc);
         return SizeAndAlign{0, 0};
 #endif
     }
@@ -1278,6 +1300,8 @@ namespace mtlpp
         MTLSizeAndAlign mtlSizeAndAlign = [(__bridge id<MTLDevice>)m_ptr heapBufferSizeAndAlignWithLength:length options:MTLResourceOptions(options)];
         return SizeAndAlign{ uint32_t(mtlSizeAndAlign.size), uint32_t(mtlSizeAndAlign.align) };
 #else
+        ignore(length);
+        ignore(options);
         return SizeAndAlign{0, 0};
 #endif
     }
@@ -1287,6 +1311,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLDevice>)m_ptr newHeapWithDescriptor:(__bridge MTLHeapDescriptor*)descriptor.GetPtr()] };
 #else
+        ignore(descriptor);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -1353,7 +1378,7 @@ namespace mtlpp
         // Error update
         if (error && nsError){
             *error = ns::Handle{ (__bridge void*)nsError };
-        }  
+        }
 
         return ns::Handle{ (__bridge void*)library };
     }
@@ -1362,7 +1387,7 @@ namespace mtlpp
     {
         Validate();
         NSString* nsSource = [NSString stringWithUTF8String:source];
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
@@ -1374,7 +1399,7 @@ namespace mtlpp
         // Error update
         if (error && nsError){
             *error = ns::Handle{ (__bridge void*)nsError };
-        }                            
+        }
 
         return ns::Handle{ (__bridge void*)library };
     }
@@ -1414,7 +1439,7 @@ namespace mtlpp
     RenderPipelineState Device::NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, PipelineOption options, RenderPipelineReflection* outReflection, ns::Error* error)
     {
         Validate();
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
@@ -1469,7 +1494,7 @@ namespace mtlpp
     ComputePipelineState Device::NewComputePipelineState(const Function& computeFunction, ns::Error* error)
     {
         Validate();
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
@@ -1546,6 +1571,10 @@ namespace mtlpp
 
         return ns::Handle{ (__bridge void*)state };
 #else
+        ignore(descriptor);
+        ignore(options);
+        ignore(outReflection);
+        ignore(error);
         return ns::Handle{ nullptr };
 #endif
     }
@@ -1563,6 +1592,10 @@ namespace mtlpp
                                                                             ns::Handle{ (__bridge void*)reflection },
                                                                             ns::Handle{ (__bridge void*)error });
                                                                     }];
+#else
+        ignore(descriptor);
+        ignore(options);
+        ignore(completionHandler);
 #endif
     }
 
@@ -1588,6 +1621,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE(10_11, 9_0)
         return [(__bridge id<MTLDevice>)m_ptr supportsTextureSampleCount:sampleCount];
 #else
+        ignore(sampleCount);
         return true;
 #endif
     }
@@ -1643,6 +1677,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_3)
         [(__bridge id<MTLDrawable>)m_ptr presentAfterMinimumDuration:duration];
+#else
+        ignore(duration);
 #endif
     }
 
@@ -1654,6 +1690,8 @@ namespace mtlpp
             Drawable drawable(ns::Handle{ (__bridge void*)mtlDrawable });
             handler(drawable);
         }];
+#else
+        ignore(handler);
 #endif
     }
 
@@ -1699,6 +1737,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLFence>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+#else
+        ignore(label);
 #endif
     }
 }
@@ -1813,6 +1853,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setSize:size];
+#else
+        ignore(size);
 #endif
 
     }
@@ -1822,8 +1864,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setStorageMode:MTLStorageMode(storageMode)];
+#else
+        ignore(storageMode);
 #endif
-
     }
 
     void HeapDescriptor::SetCpuCacheMode(CpuCacheMode cpuCacheMode) const
@@ -1831,6 +1874,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge MTLHeapDescriptor*)m_ptr setCpuCacheMode:MTLCPUCacheMode(cpuCacheMode)];
+#else
+        ignore(cpuCacheMode);
 #endif
 
     }
@@ -1906,6 +1951,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLHeap>)m_ptr setLabel:(__bridge NSString*)label.GetPtr()];
+#else
+        ignore(label);
 #endif
 
     }
@@ -1916,6 +1963,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return uint32_t([(__bridge id<MTLHeap>)m_ptr maxAvailableSizeWithAlignment:alignment]);
 #else
+        ignore(alignment);
         return 0;
 #endif
 
@@ -1927,6 +1975,8 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLHeap>)m_ptr newBufferWithLength:length options:MTLResourceOptions(options)] };
 #else
+        ignore(length);
+        ignore(options);
         return ns::Handle{ nullptr };
 #endif
 
@@ -1938,6 +1988,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return ns::Handle{ (__bridge void*)[(__bridge id<MTLHeap>)m_ptr newTextureWithDescriptor:(__bridge MTLTextureDescriptor*)desc.GetPtr()] };
 #else
+        ignore(desc);
         return ns::Handle{ nullptr };
 #endif
 
@@ -1949,6 +2000,7 @@ namespace mtlpp
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         return PurgeableState([(__bridge id<MTLHeap>)m_ptr setPurgeableState:MTLPurgeableState(state)]);
 #else
+        ignore(state);
         return PurgeableState(0);
 #endif
 
@@ -3035,6 +3087,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr updateFence:(__bridge id<MTLFence>)fence.GetPtr() afterStages:MTLRenderStages(afterStages)];
+#else
+        ignore(fence);
+        ignore(afterStages);
 #endif
     }
 
@@ -3043,6 +3098,9 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr waitForFence:(__bridge id<MTLFence>)fence.GetPtr() beforeStages:MTLRenderStages(beforeStages)];
+#else
+        ignore(fence);
+        ignore(beforeStages);
 #endif
     }
 
@@ -3051,6 +3109,10 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE(10_12, 10_0)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr setTessellationFactorBuffer:(__bridge id<MTLBuffer>)buffer.GetPtr() offset:offset instanceStride:instanceStride];
+#else
+        ignore(buffer);
+        ignore(offset);
+        ignore(instanceStride);
 #endif
     }
 
@@ -3310,6 +3372,8 @@ namespace mtlpp
         Validate();
 #if MTLPP_IS_AVAILABLE_IOS(9_0)
         [(__bridge MTLRenderPassDepthAttachmentDescriptor*)m_ptr setDepthResolveFilter:MTLMultisampleDepthResolveFilter(depthResolveFilter)];
+#else
+        ignore(depthResolveFilter);
 #endif
     }
 

@@ -198,7 +198,7 @@ namespace mtlpp
         // Error update
         if (error && nsError){
             *error = ns::Handle{ (__bridge void*)nsError };
-        }  
+        }
 
         return ns::Handle{ (__bridge void*)library };
     }
@@ -207,7 +207,7 @@ namespace mtlpp
     {
         Validate();
         NSString* nsSource = [NSString stringWithUTF8String:source];
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;
@@ -219,7 +219,7 @@ namespace mtlpp
         // Error update
         if (error && nsError){
             *error = ns::Handle{ (__bridge void*)nsError };
-        }                            
+        }
 
         return ns::Handle{ (__bridge void*)library };
     }
@@ -259,7 +259,7 @@ namespace mtlpp
     RenderPipelineState Device::NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, PipelineOption options, RenderPipelineReflection* outReflection, ns::Error* error)
     {
         Validate();
-        
+
         // Error
         NSError* nsError = NULL;
         NSError** nsErrorPtr = error ? &nsError : nullptr;

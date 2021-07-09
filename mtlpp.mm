@@ -725,7 +725,10 @@ namespace mtlpp
     void CommandQueue::InsertDebugCaptureBoundary()
     {
         Validate();
+#if MTLPP_IS_AVAILABLE(10_13, 11_0)
+#else
         [(__bridge id<MTLCommandQueue>)m_ptr insertDebugCaptureBoundary];
+#endif
     }
 }
 
@@ -1513,6 +1516,10 @@ namespace mtlpp
     ComputePipelineState Device::NewComputePipelineState(const Function& computeFunction, PipelineOption options, ComputePipelineReflection& outReflection, ns::Error* error)
     {
         Validate();
+        ignore(computeFunction);
+        ignore(options);
+        ignore(outReflection);
+        ignore(error);
         return ns::Handle{ nullptr };
     }
 
@@ -3077,7 +3084,7 @@ namespace mtlpp
     void RenderCommandEncoder::TextureBarrier()
     {
         Validate();
-#if MTLPP_IS_AVAILABLE_MAC(10_11)
+#if MTLPP_IS_AVAILABLE_MAC(10_11) && !MTLPP_IS_AVAILABLE_MAC(10_14)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr textureBarrier];
 #endif
     }

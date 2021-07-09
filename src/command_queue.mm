@@ -43,6 +43,9 @@ namespace mtlpp
     void CommandQueue::InsertDebugCaptureBoundary()
     {
         Validate();
+#if MTLPP_IS_AVAILABLE(10_13, 11_0)
+#else
         [(__bridge id<MTLCommandQueue>)m_ptr insertDebugCaptureBoundary];
+#endif
     }
 }

@@ -26,7 +26,7 @@ namespace mtlpp
 
         class CommandBuffer CommandBufferWithUnretainedReferences();
         class CommandBuffer CommandBuffer();
-        void                InsertDebugCaptureBoundary();
+        void                InsertDebugCaptureBoundary() MTLPP_DEPRECATED(10_11, 10_13, 8_0, 11_0);
     }
     MTLPP_AVAILABLE(10_11, 8_0);
 }

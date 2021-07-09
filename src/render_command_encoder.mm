@@ -432,7 +432,7 @@ namespace mtlpp
     void RenderCommandEncoder::TextureBarrier()
     {
         Validate();
-#if MTLPP_IS_AVAILABLE_MAC(10_11)
+#if MTLPP_IS_AVAILABLE_MAC(10_11) && !MTLPP_IS_AVAILABLE_MAC(10_14)
         [(__bridge id<MTLRenderCommandEncoder>)m_ptr textureBarrier];
 #endif
     }

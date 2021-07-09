@@ -333,6 +333,10 @@ namespace mtlpp
     ComputePipelineState Device::NewComputePipelineState(const Function& computeFunction, PipelineOption options, ComputePipelineReflection& outReflection, ns::Error* error)
     {
         Validate();
+        ignore(computeFunction);
+        ignore(options);
+        ignore(outReflection);
+        ignore(error);
         return ns::Handle{ nullptr };
     }
 

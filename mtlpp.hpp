@@ -1189,6 +1189,7 @@ namespace mtlpp
         Library NewLibrary(const ns::String& filepath, ns::Error* error);
         Library NewLibrary(const char* source, const CompileOptions& options, ns::Error* error);
         void NewLibrary(const char* source, const CompileOptions& options, std::function<void(const Library&, const ns::Error&)> completionHandler);
+        Library NewLibrary(const uint8_t* source, size_t size, ns::Error* error);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, ns::Error* error);
         RenderPipelineState NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, PipelineOption options, RenderPipelineReflection* outReflection, ns::Error* error);
         void NewRenderPipelineState(const RenderPipelineDescriptor& descriptor, std::function<void(const RenderPipelineState&, const ns::Error&)> completionHandler);

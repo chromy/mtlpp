@@ -1407,6 +1407,30 @@ namespace mtlpp
         return ns::Handle{ (__bridge void*)library };
     }
 
+   Library Device::NewLibrary(const uint8_t* source, size_t size, ns::Error* error)
+    {
+        Validate();
+
+        // Error
+        NSError* nsError = NULL;
+        NSError** nsErrorPtr = error ? &nsError : nullptr;
+
+        void* buffer = malloc(size);
+        memcpy(buffer, source, size);
+        dispatch_data_t data = dispatch_data_create(
+            buffer, size, nil, DISPATCH_DATA_DESTRUCTOR_FREE);
+
+        id<MTLLibrary> library = [(__bridge id<MTLDevice>)m_ptr newLibraryWithData:data
+                                       error:nsErrorPtr];
+
+        // Error update
+        if (error && nsError){
+            *error = ns::Handle{ (__bridge void*)nsError };
+        }
+
+        return ns::Handle{ (__bridge void*)library };
+    }
+
     void Device::NewLibrary(const char* source, const CompileOptions& options, std::function<void(const Library&, const ns::Error&)> completionHandler)
     {
         Validate();
